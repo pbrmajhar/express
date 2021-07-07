@@ -15,7 +15,6 @@ router.post("/singup", authCheck, async (req, res) => {
     const newUser = await new User({ name, email, picture }).save();
     res.send({ user });
   }
-  res.send("Sing up route");
 });
 
 module.exports = router;
