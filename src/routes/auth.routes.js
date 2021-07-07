@@ -17,4 +17,8 @@ router.post("/singup", authCheck, async (req, res) => {
   }
 });
 
+router.post('/login', (req, res) => {
+    res.send('something from login server')
+})
+
 module.exports = router;
