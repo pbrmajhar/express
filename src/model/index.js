@@ -5,7 +5,6 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: true,
   })
   .then(() => {
     console.log("Mongo DB is connected");

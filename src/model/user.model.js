@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
       index: true,
       unique: true,
     },
+    picture: String,
     role: {
       type: String,
       default: "subscriber",
@@ -22,4 +23,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model("User", userSchema);
