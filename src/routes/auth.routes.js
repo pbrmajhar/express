@@ -10,15 +10,17 @@ router.post("/singup", authCheck, async (req, res) => {
     { new: true }
   );
   if (user) {
+    console.log("User Updated!");
     res.send({ user });
   } else {
     const newUser = await new User({ name, email, picture }).save();
-    res.send({ user });
+    console.log('user created!')
+    res.send({ newUser });
   }
 });
 
-router.post('/login', (req, res) => {
-    res.send('something from login server')
-})
+router.post("/login", (req, res) => {
+  res.send("something from login server");
+});
 
 module.exports = router;
