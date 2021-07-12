@@ -8,6 +8,7 @@ const app = express();
 
 // import routes
 const authRoutes = require("./routes/auth.routes");
+const categoryRoutes = require("./routes/category.routes");
 
 const PORT = process.env.PORT || 4000;
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 // routes
 app.use("/api", authRoutes);
+app.use("/api/cat", categoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`express server is running on port ${PORT}`);

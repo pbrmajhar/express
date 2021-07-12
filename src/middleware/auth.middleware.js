@@ -1,10 +1,9 @@
 const admin = require("../firebase");
+const User = require("../model/user.model");
 
-const authCheck = async (req, res, next) => {
+exports.authCheck = async (req, res, next) => {
   try {
-    console.log(req.headers.token)
     const user = await admin.auth().verifyIdToken(req.headers.token);
-    console.log('user with auth ',user);
     req.user = user;
     next();
   } catch (error) {
@@ -12,4 +11,16 @@ const authCheck = async (req, res, next) => {
   }
 };
 
-module.exports = authCheck;
+exports.adminCheck = async (req, res, next) => {
+  try {
+    const isAdmin = await User.findOne({email: req.user.email})
+    console.log(isAdmin)
+    if(isAdmin.role !== 'admin'){
+      res.status(401).send('you are not authorized')
+    } else {
+      next();
+    }
+  } catch (error) {
+    res.status(401).send({ error });
+  }
+};
