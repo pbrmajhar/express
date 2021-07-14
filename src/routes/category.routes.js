@@ -43,6 +43,8 @@ router.delete("/category/:slug", authCheck, adminCheck, async (req, res) => {
 });
 
 router.patch("/category/:slug", authCheck, adminCheck, async (req, res) => {
+  console.log(req.params.slug)
+  console.log(req.body.name)
   try {
     const result = await Category.findOneAndUpdate(
       { slug: req.params.slug },
