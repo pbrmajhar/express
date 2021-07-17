@@ -1,7 +1,7 @@
-const mongoose = requre("mongoose");
-const objectId = mongoose.Schema;
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -27,12 +27,12 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     category: {
-      type: objectId,
+      type: ObjectId,
       ref: "Category",
     },
     sub_category: [
       {
-        type: objectId,
+        type: ObjectId,
         ref: "Subcategory",
       },
     ],
@@ -61,4 +61,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Product", ProductSchema);
