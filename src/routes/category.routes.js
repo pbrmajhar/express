@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { authCheck, adminCheck } = require("../middleware/auth.middleware");
 const Category = require("../model/category.model");
+const Subcategory = require("../model/subcategory.model");
 const slugify = require("slugify");
 
 router.post("/create", authCheck, adminCheck, async (req, res) => {
@@ -43,8 +44,8 @@ router.delete("/category/:slug", authCheck, adminCheck, async (req, res) => {
 });
 
 router.patch("/category/:slug", authCheck, adminCheck, async (req, res) => {
-  console.log(req.params.slug)
-  console.log(req.body.name)
+  console.log(req.params.slug);
+  console.log(req.body.name);
   try {
     const result = await Category.findOneAndUpdate(
       { slug: req.params.slug },
@@ -54,6 +55,15 @@ router.patch("/category/:slug", authCheck, adminCheck, async (req, res) => {
     res.send(result);
   } catch (error) {
     res.status(400).send("something went wrong");
+  }
+});
+
+router.get("/subcategory/:_id", async (req, res) => {
+  try {
+    const result = await Subcategory.find({ parent: req.params._id });
+    res.send(result);
+  } catch (error) {
+    console.log(error);
   }
 });
 
