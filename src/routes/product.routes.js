@@ -11,7 +11,15 @@ router.post("/create", authCheck, adminCheck, async (req, res) => {
     res.send(product);
   } catch (error) {
     console.log(error);
-    res.status(400).send("admin admin");
+  }
+});
+
+router.get("/products", async (req, res) => {
+  try {
+    const result = await Product.find();
+    res.send(result);
+  } catch (error) {
+    console.log(error);
   }
 });
 
