@@ -91,13 +91,26 @@ router.delete("/product/:id", authCheck, adminCheck, async (req, res) => {
 });
 
 router.post("/product/search", async (req, res) => {
-  const { search } = req.body;
+  const { search, price } = req.body;
   try {
-    const result = await Product.find({ $text: { $search: search } })
-      .populate("category", "_id name")
-      .populate("sub_category", "_id name");
-    res.send(result);
-    console.log(result);
+    if (search) {
+      const result = await Product.find({ $text: { $search: search } })
+        .populate("category", "_id name")
+        .populate("sub_category", "_id name");
+      res.send(result);
+    }
+    if (price) {
+      const result = await Product.find({
+        price: {
+          $gte: price[0],
+          $lte: price[1],
+        },
+      })
+        .populate("category", "_id name")
+        .populate("sub_category", "_id name");
+      res.send(result);
+    }
+    // console.log(result);
   } catch (error) {}
 });
 
