@@ -13,8 +13,8 @@ exports.authCheck = async (req, res, next) => {
 
 exports.adminCheck = async (req, res, next) => {
   try {
-    const isAdmin = await User.findOne({email: req.user.email})
-    if(isAdmin.role !== 'admin'){
+    const isAdmin = await User.findOne({ email: req.user.email })
+    if (isAdmin.role !== 'admin') {
       res.status(401).send('you are not authorized')
     } else {
       next();

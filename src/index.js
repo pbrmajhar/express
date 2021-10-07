@@ -13,6 +13,7 @@ const categoryRoutes = require("./routes/category.routes");
 const subcategory = require("./routes/subcategory.routes");
 const product = require("./routes/product.routes");
 const userRouter = require("./routes/user.routes");
+const paymentRouter = require('./routes/payment.routes')
 
 const PORT = process.env.PORT || 4000;
 
@@ -27,6 +28,7 @@ app.use("/api/cat", categoryRoutes);
 app.use("/api/sub/cat", subcategory);
 app.use("/api", product);
 app.use("/api/user", userRouter);
+app.use("/api/payment", paymentRouter);
 
 app.listen(PORT, () => {
   console.log(`express server is running on port ${PORT}`);

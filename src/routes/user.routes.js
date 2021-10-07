@@ -9,11 +9,10 @@ router.post("/cart", authCheck, async (req, res) => {
   let products = [];
 
   const user = await User.findOne({ email: req.user.email });
-  let oldCart = await Cart.findOne({ orderdBy: user._id });
+  let oldCart = await Cart.findOne({ orderedBy: user._id });
 
   if (oldCart) {
     oldCart.remove();
-    console.log("cart is removed!");
   }
 
   for (let i = 0; i < cart.length; i++) {
@@ -40,7 +39,36 @@ router.post("/cart", authCheck, async (req, res) => {
     cartTotal,
     orderedBy: user._id,
   }).save();
-  console.log(newCart);
+  res.send({ ok: true });
 });
+
+router.get("/cart", authCheck, async (req, res) => {
+  const user = await User.findOne({ email: req.user.email });
+  if (!user) {
+    res.status(404).send({ error: 'user not found, or please login in again' })
+    console.log('user not found, or please login in again')
+  }
+  const cart = await Cart.findOne({ orderedBy: user._id }).populate(
+    "products.product",
+    "_id title price"
+  );
+
+  const { products, cartTotal } = cart;
+  res.send({ products, cartTotal });
+});
+
+
+router.post("/address", authCheck, async (req, res) => {
+  const user = await User.findOne({ email: req.user.email })
+  const result = await User.findOneAndUpdate({email: req.user.email},{ address: req.body.address }, {new: true})
+  res.send({ address: result.address })
+})
+
+router.get('/address', authCheck, async (req, res) => {
+  const user = await User.findOne({email: req.user.email})
+  res.send({address: user.address})
+  console.log('getting the user address')
+})
+
 
 module.exports = router;
